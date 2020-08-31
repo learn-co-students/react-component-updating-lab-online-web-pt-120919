@@ -11,6 +11,12 @@ class Timer extends Component {
   }
 
   //Your code here
+  componentDidUpdate(prevProps) {
+    // Typical usage (don't forget to compare props):
+    if (this.props.userID !== prevProps.userID) {
+      this.fetchData(this.props.userID);
+    }
+  }
 
   componentDidMount() {
     this.interval = setInterval(
@@ -21,6 +27,13 @@ class Timer extends Component {
 
   componentWillUnmount() {
     clearInterval(this.interval);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.time === nextState.time) {
+      return false
+    }
+    return true
   }
 
   render() {
